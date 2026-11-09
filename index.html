@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AquaPure - Water Quality & Counseling Platform</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col justify-between">
+
+  <!-- Header & Navigation -->
+  <header class="bg-blue-600 text-white shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="flex items-center space-x-3">
+        <i class="fa-solid font-bold fa-droplet text-cyan-300 text-3xl"></i>
+        <div>
+          <h1 class="text-2xl font-bold tracking-tight">AquaPure</h1>
+          <p class="text-xs text-blue-100">Verification & Expert Advisory</p>
+        </div>
+      </div>
+      
+      <!-- Navigation Tabs -->
+      <nav class="flex space-x-2 bg-blue-700/60 p-1 rounded-xl">
+        <button id="tab-verify-btn" class="nav-btn active px-5 py-2 rounded-lg text-sm font-semibold transition-all duration-200">
+          <i class="fa-solid fa-vial mr-2"></i>Water Verification
+        </button>
+        <button id="tab-counseling-btn" class="nav-btn px-5 py-2 rounded-lg text-sm font-semibold transition-all duration-200 text-white hover:bg-blue-600/50">
+          <i class="fa-solid fa-user-doctor mr-2"></i>Book Counseling
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <main class="max-w-7xl mx-auto px-4 py-8 flex-grow w-full">
+    
+    <!-- SECTION 1: WATER QUALITY VERIFICATION TAB -->
+    <section id="verify-tab" class="space-y-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <!-- Left Column: Input Form -->
+        <div class="lg:col-span-5 bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+          <h2 class="text-xl font-bold text-slate-800 mb-2 flex items-center gap-2">
+            <i class="fa-solid fa-flask text-blue-600"></i> Sample Parameters
+          </h2>
+          <p class="text-xs text-slate-500 mb-6">Enter test measurements or select a preset to evaluate water safety.</p>
+          
+          <!-- Presets -->
+          <div class="mb-6">
+            <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Quick Presets</label>
+            <div class="grid grid-cols-2 gap-2">
+              <button data-preset="tap" class="preset-btn text-xs bg-slate-100 hover:bg-blue-50 hover:text-blue-600 border border-slate-200 px-3 py-2 rounded-lg transition font-medium text-left">
+                <i class="fa-solid fa-faucet text-slate-400 mr-1"></i> Clean Tap
+              </button>
+              <button data-preset="aquarium" class="preset-btn text-xs bg-slate-100 hover:bg-blue-50 hover:text-blue-600 border border-slate-200 px-3 py-2 rounded-lg transition font-medium text-left">
+                <i class="fa-solid fa-fish text-slate-400 mr-1"></i> Fish Tank
+              </button>
+              <button data-preset="well" class="preset-btn text-xs bg-slate-100 hover:bg-blue-50 hover:text-blue-600 border border-slate-200 px-3 py-2 rounded-lg transition font-medium text-left">
+                <i class="fa-solid fa-bore-hole text-slate-400 mr-1"></i> Well Water
+              </button>
+              <button data-preset="polluted" class="preset-btn text-xs bg-slate-100 hover:bg-blue-50 hover:text-blue-600 border border-slate-200 px-3 py-2 rounded-lg transition font-medium text-left">
+                <i class="fa-solid fa-triangle-exclamation text-slate-400 mr-1"></i> Contaminated
+              </button>
+            </div>
+          </div>
+
+          <form id="water-form" class="space-y-4">
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Sample ID / Location Label</label>
+              <input type="text" id="sample-id" placeholder="e.g., Kitchen Tap - Sample #1" required class="w-full text-sm border border-slate-300 rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Water Source</label>
+              <select id="water-source" class="w-full text-sm border border-slate-300 rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <option value="Drinking / Municipal Tap">Drinking / Municipal Tap</option>
+                <option value="Aquarium / Fish Tank">Aquarium / Fish Tank</option>
+                <option value="Groundwater / Well">Groundwater / Well</option>
+                <option value="Bottled Water">Bottled Water</option>
+                <option value="Pond / Lake Sample">Pond / Lake Sample</option>
+              </select>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs font-semibold text-slate-600 mb-1">pH Level (0 - 14)</label>
+                <input type="number" id="ph" step="0.1" min="0" max="14" placeholder="7.2" required class="w-full text-sm border border-slate-300 rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500">
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-600 mb-1">Turbidity (NTU)</label>
+                <input type="number" id="turbidity" step="0.1" min="0" placeholder="1.5" required class="w-full text-sm border border-slate-300 rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500">
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs font-semibold text-slate-600 mb-1">TDS (ppm)</label>
+                <input type="number" id="tds" step="1" min="0" placeholder="250" required class="w-full text-sm border border-slate-300 rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500">
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-600 mb-1">Chlorine (mg/L)</label>
+                <input type="number" id="chlorine" step="0.1" min="0" placeholder="0.5" required class="w-full text-sm border border-slate-300 rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500">
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Temperature (°C)</label>
+              <input type="number" id="temperature" step="0.1" placeholder="22.5" required class="w-full text-sm border border-slate-300 rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+
+            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm py-3 rounded-lg shadow transition flex justify-center items-center gap-2">
+              <i class="fa-solid fa-microscope"></i> Verify Sample Safety
+            </button>
+          </form>
+        </div>
+
+        <!-- Right Column: Results Dashboard -->
+        <div class="lg:col-span-7 flex flex-col space-y-6">
+          <div id="results-card" class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex-grow flex flex-col justify-center items-center text-center">
+            <div class="bg-blue-50 text-blue-500 p-4 rounded-full mb-3">
+              <i class="fa-solid fa-vial-circle-check text-4xl"></i>
+            </div>
+            <h3 class="text-lg font-bold text-slate-700">No Sample Analyzed Yet</h3>
+            <p class="text-xs text-slate-400 max-w-sm mt-1">Fill out the parameters on the left or select a preset to generate an instant water safety report.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Log Section -->
+      <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+        <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+          <i class="fa-solid fa-history text-blue-600"></i> Verification History Log
+        </h3>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse text-xs">
+            <thead>
+              <tr class="bg-slate-50 border-b border-slate-200 text-slate-600">
+                <th class="p-3">Sample ID</th>
+                <th class="p-3">Source</th>
+                <th class="p-3">pH</th>
+                <th class="p-3">TDS (ppm)</th>
+                <th class="p-3">Turbidity (NTU)</th>
+                <th class="p-3">Safety Index</th>
+                <th class="p-3">Status</th>
+              </tr>
+            </thead>
+            <tbody id="history-log" class="divide-y divide-slate-100">
+              <tr>
+                <td colspan="7" class="p-4 text-center text-slate-400 italic">No samples recorded yet.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: COUNSELING TAB -->
+    <section id="counseling-tab" class="hidden space-y-8">
+      <div class="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-2xl p-6 text-white shadow-md flex flex-col md:flex-row justify-between items-center gap-4">
+        <div>
+          <h2 class="text-2xl font-bold">Water Quality Advisory & Home Inspection</h2>
+          <p class="text-blue-100 text-xs md:text-sm mt-1">Get personalized guidance from certified water scientists via video/phone call or request an in-person home inspection.</p>
+        </div>
+        <div class="flex gap-2">
+          <span class="bg-white/20 px-3 py-1.5 rounded-lg text-xs font-medium backdrop-blur-sm"><i class="fa-solid fa-shield-halved mr-1"></i> Certified Experts</span>
+          <span class="bg-white/20 px-3 py-1.5 rounded-lg text-xs font-medium backdrop-blur-sm"><i class="fa-solid fa-house-chimney text-emerald-300 mr-1"></i> Home Visits</span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <div class="lg:col-span-7 bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+          <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+            <i class="fa-solid fa-calendar-check text-blue-600"></i> Schedule a Counseling Session
+          </h3>
+
+          <form id="counseling-form" class="space-y-4">
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-2">Select Service Mode</label>
+              <div class="grid grid-cols-2 gap-4">
+                <label class="cursor-pointer">
+                  <input type="radio" name="counseling_type" value="Virtual Call Counseling" checked class="counseling-type-radio peer hidden">
+                  <div class="p-3 border-2 border-slate-200 rounded-xl text-center peer-checked:border-blue-600 peer-checked:bg-blue-50 transition">
+                    <i class="fa-solid fa-video text-blue-600 text-lg mb-1 block"></i>
+                    <span class="text-xs font-bold text-slate-700 block">Virtual Call Counseling</span>
+                    <span class="text-[10px] text-slate-400">Phone or Video Consultation</span>
+                  </div>
+                </label>
+
+                <label class="cursor-pointer">
+                  <input type="radio" name="counseling_type" value="Home Visit & Inspection" class="counseling-type-radio peer hidden">
+                  <div class="p-3 border-2 border-slate-200 rounded-xl text-center peer-checked:border-blue-600 peer-checked:bg-blue-50 transition">
+                    <i class="fa-solid fa-house-user text-indigo-600 text-lg mb-1 block"></i>
+                    <span class="text-xs font-bold text-slate-700 block">Home Visit Inspection</span>
+                    <span class="text-[10px] text-slate-400">On-site Water Testing & Diagnostics</span>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs font-semibold text-slate-600 mb-1">Full Name</label>
+                <input type="text" id="client-name" placeholder="John Doe" required class="w-full text-sm border border-slate-300 rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500">
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-600 mb-1">Phone Number</label>
+                <input type="tel" id="client-phone" placeholder="+1 (555) 000-0000" required class="w-full text-sm border border-slate-300 rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500">
+              </div>
+            </div>
+
+            <div id="address-container" class="hidden">
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Home Address (For On-Site Inspection)</label>
+              <input type="text" id="client-address" placeholder="123 Ocean Drive, Apt 4B, City" class="w-full text-sm border border-slate-300 rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Preferred Specialist</label>
+              <select id="specialist-select" class="w-full text-sm border border-slate-300 rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <option value="Yaala Assiri - Water Specialist">Yaala Assiri (Water Specialist)</option>
+                <option value="Eng. Michael Vance - Filtration Systems Specialist">Eng. Michael Vance (Filtration & RO Systems)</option>
+                <option value="Elena Rostova - Aquatic & Bio-Safety Specialist">Elena Rostova (Aquatic & Fish Tank Ecology)</option>
+              </select>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs font-semibold text-slate-600 mb-1">Preferred Date</label>
+                <input type="date" id="booking-date" required class="w-full text-sm border border-slate-300 rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500">
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-600 mb-1">Preferred Time Slot</label>
+                <select id="booking-time" class="w-full text-sm border border-slate-300 rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                  <option value="10:00 AM - 11:00 AM">10:00 AM - 11:00 AM</option>
+                  <option value="02:00 PM - 03:00 PM">02:00 PM - 03:00 PM</option>
+                  <option value="05:00 PM - 06:00 PM">05:00 PM - 06:00 PM</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Water Issue / Notes</label>
+              <textarea id="issue-notes" rows="3" placeholder="Describe your water concerns..." class="w-full text-sm border border-slate-300 rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+            </div>
+
+            <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm py-3 rounded-lg shadow transition flex justify-center items-center gap-2">
+              <i class="fa-solid fa-paper-plane"></i> Confirm Booking Request
+            </button>
+          </form>
+        </div>
+
+        <div class="lg:col-span-5 space-y-4">
+          <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+            <i class="fa-solid fa-user-tie text-blue-600"></i> Featured Experts
+          </h3>
+
+          <div class="bg-white p-4 rounded-xl border border-slate-200 flex gap-4 items-center">
+            <img src="https://images.unsplash.com/photo-1594824813566-88855ce78963?auto=format&fit=crop&w=120&q=80" class="w-14 h-14 rounded-full object-cover border-2 border-blue-500" alt="Doctor Specialist">
+            <div>
+              <h4 class="text-sm font-bold text-slate-800">Yaala Assiri</h4>
+              <p class="text-xs text-blue-600 font-medium">Water Specialist</p>
+              <p class="text-[11px] text-slate-500 mt-0.5">Specialized in drinking water safety, heavy metal detection, and pH balance.</p>
+            </div>
+          </div>
+
+          <div class="bg-white p-4 rounded-xl border border-slate-200 flex gap-4 items-center">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80" class="w-14 h-14 rounded-full object-cover border-2 border-blue-500" alt="Engineer Specialist">
+            <div>
+              <h4 class="text-sm font-bold text-slate-800">Eng. Michael Vance</h4>
+              <p class="text-xs text-blue-600 font-medium">Water Filtration Specialist</p>
+              <p class="text-[11px] text-slate-500 mt-0.5">Expert in home RO filter installation, whole-house systems, and pipe diagnostics.</p>
+            </div>
+          </div>
+
+          <div class="bg-white p-4 rounded-xl border border-slate-200 flex gap-4 items-center">
+            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=120&q=80" class="w-14 h-14 rounded-full object-cover border-2 border-blue-500" alt="Aquatic Specialist">
+            <div>
+              <h4 class="text-sm font-bold text-slate-800">Elena Rostova</h4>
+              <p class="text-xs text-blue-600 font-medium">Aquatic Biosafety Specialist</p>
+              <p class="text-[11px] text-slate-500 mt-0.5">Focuses on aquarium water chemistry, bio-filtration, and aquatic species wellness.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Confirmation Modal -->
+  <div id="booking-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden flex justify-center items-center p-4 z-50">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 text-center shadow-xl">
+      <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-3 text-xl">
+        <i class="fa-solid fa-check"></i>
+      </div>
+      <h3 class="text-lg font-bold text-slate-800">Counseling Request Received!</h3>
+      <p class="text-xs text-slate-500 mt-1">Our specialist team has logged your appointment request.</p>
+
+      <div id="modal-details" class="my-4 p-4 bg-slate-50 rounded-xl text-left text-xs space-y-2 border border-slate-200"></div>
+
+      <button id="close-modal-btn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs py-2.5 rounded-lg transition">
+        Done
+      </button>
+    </div>
+  </div>
+
+  <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-400">
+    &copy; 2026 AquaPure Water Safety Platform. All rights reserved.
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
